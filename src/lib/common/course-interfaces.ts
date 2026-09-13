@@ -2,6 +2,7 @@
  * Enum for consistency
  */
 enum Day {
+    DEFAULT = "DEFAULT",
     Monday = "Monday",
     Tuesday = "Tuesday",
     Wednesday = "Wednesday",
