@@ -1,6 +1,6 @@
 [data-theme='morekipz'] {
 	--text-scaling: 1.0;
-	--typo-base--font-family: system-ui, sans-serif;
+	--typo-base--font-family: 'Barlow', system-ui, sans-serif;
 	--typo-base--font-size: inherit;
 	--typo-base--color-light: var(--color-surface-950);
 	--typo-base--color-dark: var(--color-surface-50);
