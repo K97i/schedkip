@@ -50,7 +50,7 @@
                     <div>
                         {schedule.day}
                     </div>
-                    <div class="text-xs">
+                    <div class="text-xs whitespace-nowrap">
                         {schedule.timeStart.hour}:{schedule.timeStart.minute <= 10 ? "0" + schedule.timeStart.minute : schedule.timeStart.minute} - {schedule.timeEnd.hour}:{schedule.timeEnd.minute <= 10 ? "0" + schedule.timeEnd.minute : schedule.timeEnd.minute}
                     </div>
                     <div class="text-xs">

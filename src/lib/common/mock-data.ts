@@ -208,10 +208,84 @@ const CCPROG1: Course = {
     ]
 };
 
+const MTH101A: Course = {
+    name: "MTH101A",
+    code: "MTH101A",
+    title: "Foundation Course in Mathematics",
+    units: 5,
+    sections: [
+        {
+            section: "S19",
+            instructor: "Noel Fortun",
+            schedule: [
+                {
+                    day: Day.Monday,
+                    room: "Online",
+                    timeStart: { hour: 7, minute: 30, },
+                    timeEnd: { hour: 8, minute: 30, },
+                },
+                {
+                    day: Day.Tuesday,
+                    room: "Online",
+                    timeStart: { hour: 7, minute: 30, },
+                    timeEnd: { hour: 8, minute: 30, },
+                },
+                {
+                    day: Day.Thursday,
+                    room: "V203",
+                    timeStart: { hour: 7, minute: 30, },
+                    timeEnd: { hour: 9, minute: 0, },
+                },
+                {
+                    day: Day.Friday,
+                    room: "V203",
+                    timeStart: { hour: 7, minute: 30, },
+                    timeEnd: { hour: 9, minute: 0, },
+                },
+            ]
+        },
+    ]
+};
+
+const CCICOMP: Course = {
+    name: "CCICOMP",
+    code: "CCICOMP",
+    title: "Introduction to Computing",
+    units: 5,
+    sections: [
+        {
+            section: "S19",
+            instructor: "Jocelynn Cu",
+            schedule: [
+                {
+                    day: Day.Tuesday,
+                    room: "Online",
+                    timeStart: { hour: 7, minute: 30, },
+                    timeEnd: { hour: 9, minute: 0, },
+                },
+                {
+                    day: Day.Friday,
+                    room: "G101",
+                    timeStart: { hour: 9, minute: 15, },
+                    timeEnd: { hour: 10, minute: 45, },
+                },
+                {
+                    day: Day.Friday,
+                    room: "G405",
+                    timeStart: { hour: 12, minute: 45, },
+                    timeEnd: { hour: 2, minute: 15, },
+                },
+            ]
+        },
+    ]
+};
+
 const MOCK_COURSES: Array<Course> = [
     CCPROG3,
     CCINFOM,
-    CCPROG1
+    CCPROG1,
+    MTH101A,
+    CCICOMP,
 ];
 
 export { MOCK_COURSES };
