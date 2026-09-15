@@ -1,12 +1,12 @@
 <script lang="ts">
     import SearchComponent from "$lib/components/search/SearchComponent.svelte";
-    import type { Course, Section } from "$lib/common/course-interfaces";
+    import type { Course, SelectedSection } from "$lib/common/course-interfaces";
     import { onMount } from "svelte";
-    import { SvelteSet } from "svelte/reactivity";
+    import { SvelteMap } from "svelte/reactivity";
     import Schedule from "$lib/components/schedule/Schedule.svelte";
 
     let courses: Array<Course> = $state(new Array<Course>()),
-        selectedList: SvelteSet<Section> = $state(new SvelteSet<Section>());
+        selectedList: SvelteMap<string, SelectedSection> = $state(new SvelteMap<string, SelectedSection>());
 
     // Function to grab courses from API
     async function grabCourses() {

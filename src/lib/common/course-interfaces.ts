@@ -64,6 +64,14 @@ interface Course {
     sections: Array<Section>;
 }
 
+/**
+ * Interface for a selected section
+ */
+interface SelectedSection {
+    course: string; // Course Code
+    section: Section;
+}
+
 // Export everything in this file
 // Enums
 export {
@@ -76,5 +84,5 @@ export type {
     ScheduledClass,
     Section, 
     Course,
-
+    SelectedSection,
 }

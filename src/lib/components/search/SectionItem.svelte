@@ -1,24 +1,27 @@
 <script lang="ts">
-    import type { Section } from "$lib/common/course-interfaces";
-    import { SvelteSet } from "svelte/reactivity";
+    import type { Section, SelectedSection } from "$lib/common/course-interfaces";
+    import { SvelteMap } from "svelte/reactivity";
     import { fade, fly } from "svelte/transition";
 
     const TOGGLE_KEYS: Array<string> = [
         "Enter",
         "Space",
-    ]
+    ];
 
     // Get section from props
-	let { section, selectedList = $bindable(), }: { section: Section, selectedList: SvelteSet<Section> } = $props();
-    let selected: boolean = $state(false);
+	let { courseCode, section, selectedList = $bindable(), }: { courseCode: string, section: Section, selectedList: SvelteMap<string, SelectedSection> } = $props();
+    let sectionData: SelectedSection = $derived({
+        course: courseCode,
+        section: section
+    });
+    let sectionCode: string = $derived(`${courseCode}-${section.section}`);
+    let selected: boolean = $derived(selectedList.has(sectionCode));
 
     function toggle() {
-        selected = !selected;
-
-        if (selected)
-            selectedList.add(section);
+        if (!selected)
+            selectedList.set(sectionCode, sectionData);
         else
-            selectedList.delete(section);
+            selectedList.delete(sectionCode);
     }
 
     function toggleKey(event: KeyboardEvent) {
@@ -44,9 +47,9 @@
         </div>
 
         <!-- Section Info -->
-        <div class="flex flex-row gap-2">
+        <div class="flex flex-row gap-2 flex-wrap">
             {#each section.schedule as schedule}
-                <div class="card {cardColor} p-2 flex-auto text-center text-sm">
+                <div class="card {cardColor} p-2 flex-auto text-center text-sm min-w-1/3">
                     <div>
                         {schedule.day}
                     </div>

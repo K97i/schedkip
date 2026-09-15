@@ -4,19 +4,16 @@
     import type { Course, ScheduledClass, Section } from "$lib/common/course-interfaces";
     import { fade } from 'svelte/transition';
 
-	let { courses, filteredCourses = $bindable() }: { courses: Array<Course>, filteredCourses: Array<Section> } = $props();
+	let { courses, courseCode = $bindable(), filteredSections = $bindable() }: { courses: Array<Course>, courseCode: string, filteredSections: Array<Section> } = $props();
 
-    let selectedCourse: string = $state(""),
-        searchInstructor: string = $state(""),
+    let searchInstructor: string = $state(""),
         selectedDate: Day = $state(Day.DEFAULT),
         comboboxItems: Array<Course> = $derived(courses);
 
     function filter() {
-        filteredCourses = courses.filter((course: Course) => course.code === selectedCourse)
+        filteredSections = courses.filter((course: Course) => course.code === courseCode)
                     .flatMap((course: Course) => course.sections)
                     .filter((section: Section) => {
-                        console.log((searchInstructor === "" ? true : 
-                                                section.instructor.toLowerCase().includes(searchInstructor.toLowerCase())));
                         return (
                             // Search by instructor
                             (searchInstructor === "" ? true : 
@@ -56,7 +53,7 @@
 	};
 
     const comboboxOnValueChange: ComboboxRootProps['onValueChange'] = (event) => {
-        selectedCourse = event.value[0];
+        courseCode = event.value[0];
         filter();
     }
 </script>
@@ -85,7 +82,7 @@
     </div>
 
     <!-- Additional filters -->
-    {#if selectedCourse.length > 0}
+    {#if filteredSections.length > 0}
         <div class="flex flex-col gap-2" transition:fade={{ duration: 100 }}>
             <hr class="hr border-secondary-500"/>
             <!-- Search by Instructor-->
