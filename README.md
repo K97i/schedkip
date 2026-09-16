@@ -1,6 +1,6 @@
 <h1 align="center">Schedkip</h1>
 <p align="center">
-    <img width="600px" src="./gh-assets/logo.png"></img><br/>
+    <img width="600px" src="./gh-assets/readme/schedkip.png"></img><br/>
     <i>(Schedule + Mudkip)</i><br/>
 </p>
 

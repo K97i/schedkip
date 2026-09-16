@@ -23,3 +23,11 @@ For this site, I used Svelte / SvelteKit (web framework), TailwindCSS (CSS frame
 ## Course Data Structure
 
 I explicitly defined the entire structure of the course data in `course-interfaces.ts`, with interface definitions. Instead of a JSON file piped into the TypeScript code, I opted to make the mock data inside TypeScript file `mock-data.ts`, to explicitly ensure type safety during the creation of the mock data (and further input from an admin webpage should this be developed into an actual website).
+
+# Section Selection
+
+I opted to do the main schedule operations (addition, removal, checking of sections) to the individual section itself.
+
+# Schedule Building
+
+On original read of the instructions, I went with using flexboxes to create the schedule, and aligning it to 15-minute intervals (effectively rows) with `flex-basis`. Flex is more familiar to me than using grids or tables, and allows simpler control for me to know the flow of each element. I also padded the start and end schedule to the next/nearest hour so that schedules are consistent in layout.

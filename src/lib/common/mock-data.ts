@@ -1,6 +1,7 @@
 import { Day } from "./course-interfaces.ts";
 import type { Course } from "./course-interfaces.ts";
 
+// Courses to test general functionality
 const CCPROG3: Course = {
     name: "CCPROG3",
     code: "CCPROG3",
@@ -208,6 +209,7 @@ const CCPROG1: Course = {
     ]
 };
 
+// Course to test row accuracy
 const MTH101A: Course = {
     name: "MTH101A",
     code: "MTH101A",
@@ -247,27 +249,7 @@ const MTH101A: Course = {
     ]
 };
 
-const NSTP1CWT: Course = {
-    name: "NSTP1CWT",
-    code: "NSTP1CWT",
-    title: "Foundation Course in Mathematics",
-    units: 5,
-    sections: [
-        {
-            section: "S19",
-            instructor: "Noel Fortun",
-            schedule: [
-                {
-                    day: Day.Saturday,
-                    room: "Online",
-                    timeStart: { hour: 9, minute: 0, },
-                    timeEnd: { hour: 12, minute: 0, },
-                },
-            ]
-        },
-    ]
-};
-
+// Course to test multiple classes in one day
 const CCICOMP: Course = {
     name: "CCICOMP",
     code: "CCICOMP",
@@ -301,13 +283,35 @@ const CCICOMP: Course = {
     ]
 };
 
+// Course to test Day.Saturday classes
+const NSTPCW2: Course = {
+    name: "NSTPCW2",
+    code: "NSTPCW2",
+    title: "CWTS Formation Phase",
+    units: 3,
+    sections: [
+        {
+            section: "S04",
+            instructor: "Richie Enecillo",
+            schedule: [
+                {
+                    day: Day.Saturday,
+                    room: "V203",
+                    timeStart: { hour: 9, minute: 0, },
+                    timeEnd: { hour: 12, minute: 0, },
+                },
+            ]
+        },
+    ]
+};
+
 const MOCK_COURSES: Array<Course> = [
     CCPROG3,
     CCINFOM,
     CCPROG1,
     MTH101A,
-    NSTP1CWT,
     CCICOMP,
+    NSTPCW2,
 ];
 
 export { MOCK_COURSES };

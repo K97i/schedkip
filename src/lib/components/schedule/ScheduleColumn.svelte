@@ -1,35 +1,35 @@
 <script lang="ts">
+    import ScheduledBlock from "./ScheduledBlock.svelte";
     import ScheduleHourDivider from "./ScheduleHourDivider.svelte";
-    import { ScheduleTime, type ScheduleItem } from "./ScheduleItem";
-    import { SvelteMap } from "svelte/reactivity";
+    import { type RowData, type ScheduleItem } from "./ScheduleItem";
 
-	let { daySchedule, divRows, hourData }: { daySchedule: Array<ScheduleItem> | undefined, divRows: number, hourData: { earliestHour: number, latestHour: number } } = $props();
+	let { daySchedule, rowData }: { daySchedule: Array<ScheduleItem> | undefined, rowData: RowData } = $props();
 
+    // Convert time to row number in schedule
     function timeToRow(time: { hour: number; minute: number }, earliestHour: number): number {
         return (time.hour - earliestHour) * 4 + Math.floor(time.minute / 15);
     }
     
+    // Interface for schedule item data
     interface ScheduleDiv {
         flex: number;
         data: ScheduleItem | undefined;
     }
 
+    /**
+     * Create an array of blocks for the divs
+     */
     let dayArray: Array<ScheduleDiv> = $derived.by(() => {
         const blocks: ScheduleDiv[] = [];
         let currentCursorRow = 0;
 
-        for (const item of daySchedule ?? []) {
-            const startRow = timeToRow(
-                item.scheduleData.timeStart,
-                hourData.earliestHour
-            );
+        // For each of the daySchedule...
+        daySchedule?.forEach((item) => {
+            // Get start-end points of item
+            const startRow = timeToRow(item.scheduleData.timeStart, rowData.earliestHour);
+            const endRow = timeToRow(item.scheduleData.timeEnd, rowData.earliestHour);
 
-            const endRow = timeToRow(
-                item.scheduleData.timeEnd,
-                hourData.earliestHour
-            );
-
-            // Empty space before the class
+            // Add any necessary empty space (break periods) before item
             if (startRow > currentCursorRow) {
                 blocks.push({
                     flex: startRow - currentCursorRow,
@@ -37,65 +37,44 @@
                 });
             }
 
-            // Class itself
+            // Add actual item to array
             blocks.push({
                 flex: endRow - startRow,
                 data: item
             });
 
-            // Move cursor to the end of the class
+            // Move current row to end of row
             currentCursorRow = endRow;
-        }
+        })
 
-        // Fill the remainder of the padded timeline
-        if (currentCursorRow < divRows) {
+        // Add padding to the end to fill the rest of the rows
+        if (currentCursorRow < rowData.divRows) {
             blocks.push({
-                flex: divRows - currentCursorRow,
+                flex: rowData.divRows - currentCursorRow,
                 data: undefined
             });
         }
 
+        // Return final array
         return blocks;
     });
 </script>
 
 <div class="grid grid-cols-1 grid-rows-1 min-w-8 md:min-w-32 max-w-full h-full">
+    <!-- Divider Underlay -->
     <div class="col-start-1 row-start-1 h-full">
-        <ScheduleHourDivider divRows={divRows} />
+        <ScheduleHourDivider divRows={rowData.divRows} />
     </div>
     
+    <!-- Actual Data -->
     <div class="col-start-1 row-start-1 h-full">
         <div class="flex flex-col p-1 h-full items-center">
             {#each dayArray as item}
+                <!-- Set number of rows taken -->
                 <div style="flex: {item.flex}" class="flex min-w-full">
+                    <!-- If block is an actual class -->
                     {#if item.data}
-                        <div class="card preset-outlined-primary-500 bg-primary-950/20 backdrop-blur-[2px] flex flex-col min-w-full justify-between">
-                            <!-- Start Time -->
-                            <div class="flex flex-row justify-center text-surface-300">
-                                <div class="text-xs md:text-[0.70rem]">
-                                    {item.data.scheduleData.timeStart.hour}:{item.data.scheduleData.timeStart.minute < 10 ? '0' + item.data.scheduleData.timeStart.minute : item.data.scheduleData.timeStart.minute} 
-                                </div>
-                            </div>
-
-                            <!-- Section Data -->
-                            <div class="flex flex-col text-[0.60rem] md:text-[0.70rem] leading-none">
-                                <div>
-                                    {item.data.section.course}
-                                </div>
-                                <div>
-                                    {item.data.scheduleData.room}
-                                </div>
-                                <div>
-                                    ({item.data.section.section.section})
-                                </div>
-                            </div>
-                            <!-- End Time -->
-                            <div class="flex flex-row justify-center text-surface-300">
-                                <div class="text-xs md:text-[0.70rem]">
-                                    {item.data.scheduleData.timeEnd.hour}:{item.data.scheduleData.timeEnd.minute < 10 ? '0' + item.data.scheduleData.timeEnd.minute : item.data.scheduleData.timeEnd.minute}
-                                </div>
-                            </div>
-                        </div>
+                        <ScheduledBlock data={item.data} />
                     {/if}
                 </div>
             {/each}
