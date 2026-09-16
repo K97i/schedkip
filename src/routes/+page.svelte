@@ -24,7 +24,7 @@
             <SearchComponent courses={courses} bind:selectedList={selectedList} />
         </div>
 
-        <div class="flex-3 max-w-full md:max-w-3/4 min-h-svh snap-start">
+        <div class="flex-3 max-w-full md:max-w-2/3 min-h-svh snap-start">
             <Schedule selectedList={selectedList} />
         </div>
 

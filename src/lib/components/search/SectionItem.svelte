@@ -51,7 +51,7 @@
     let cardColor: string = $derived(selected ? "preset-outlined-primary-400-600 bg-primary-500/20" : (!scheduleConflict ? "preset-outlined-secondary-400-600 bg-secondary-500/20" : "preset-outlined-error-400-600 bg-error-500/20 brightness-70"))
 </script>
 
-<div transition:fly={{ duration: 100, y: 20 }} class="min-w-full flex" > 
+<div transition:fly={{ duration: 100, y: 20 }} class="min-w-full flex relative" > 
     <div transition:fade={{ duration: 100 }} onclick={selected ? toggle : (!scheduleConflict ? toggle : () => {})} onkeyup={(event) => {selected ? toggleKey(event) : (!scheduleConflict ? toggleKey(event) : () => {})}} role="button" tabindex="0" class="card {cardColor} {selected ? 'hover:brightness-70' : (!scheduleConflict ? 'hover:brightness-70' : '')} transition-all p-2 gap-2 flex flex-col min-w-full min-h-24 select-none">
         <!-- Top Bar -->
         <div class="flex flex-row justify-between gap-2 text-sm">
@@ -82,6 +82,16 @@
             {/each}
         </div>
     </div>
+
+    {#if scheduleConflict && !selected}
+        <div class="rounded-xl absolute inset-0 backdrop-blur-[1.25px]">
+            <div class="flex h-full items-center justify-center">
+                <div class="chip preset-outlined-error-400-600 bg-error-500/10">
+                    Schedule Conflict!
+                </div>
+            </div>
+        </div>
+    {/if}
 </div>
     
 
