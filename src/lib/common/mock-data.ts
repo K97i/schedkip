@@ -247,6 +247,27 @@ const MTH101A: Course = {
     ]
 };
 
+const NSTP1CWT: Course = {
+    name: "NSTP1CWT",
+    code: "NSTP1CWT",
+    title: "Foundation Course in Mathematics",
+    units: 5,
+    sections: [
+        {
+            section: "S19",
+            instructor: "Noel Fortun",
+            schedule: [
+                {
+                    day: Day.Saturday,
+                    room: "Online",
+                    timeStart: { hour: 9, minute: 0, },
+                    timeEnd: { hour: 12, minute: 0, },
+                },
+            ]
+        },
+    ]
+};
+
 const CCICOMP: Course = {
     name: "CCICOMP",
     code: "CCICOMP",
@@ -273,7 +294,7 @@ const CCICOMP: Course = {
                     day: Day.Friday,
                     room: "G405",
                     timeStart: { hour: 12, minute: 45, },
-                    timeEnd: { hour: 2, minute: 15, },
+                    timeEnd: { hour: 14, minute: 15, },
                 },
             ]
         },
@@ -285,6 +306,7 @@ const MOCK_COURSES: Array<Course> = [
     CCINFOM,
     CCPROG1,
     MTH101A,
+    NSTP1CWT,
     CCICOMP,
 ];
 

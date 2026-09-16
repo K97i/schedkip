@@ -1,13 +1,11 @@
 <script lang="ts">
-    import { Day, type Course, type ScheduledClass, type SelectedSection } from "$lib/common/course-interfaces";
+    import { Day, type ScheduledClass, type SelectedSection } from "$lib/common/course-interfaces";
     import { SvelteMap } from "svelte/reactivity";
+    import { ScheduleTime, type ScheduleItem } from "./ScheduleItem";
+    import ScheduleColumn from "./ScheduleColumn.svelte";
+    import TimeColumn from "./TimeColumn.svelte";
 
 	let { selectedList }: { selectedList: SvelteMap<string, SelectedSection> } = $props();
-
-    interface ScheduleItem {
-        section: SelectedSection;
-        scheduleData: ScheduledClass;
-    }
 
     let fullSchedule: SvelteMap<Day, Array<ScheduleItem>> = $derived.by(() => {
         let map: SvelteMap<Day, Array<ScheduleItem>> = new SvelteMap<Day, Array<ScheduleItem>>();
@@ -25,61 +23,85 @@
             })
         })
 
+        for (const schedule of map.values()) {
+            schedule.sort((a, b) => {
+                const aTime = a.scheduleData.timeStart;
+                const bTime = b.scheduleData.timeStart;
+
+                return (
+                    (aTime.hour * 60 + aTime.minute) -
+                    (bTime.hour * 60 + bTime.minute)
+                );
+            });
+        }
+
         return map;
     });
 
-    $effect(() => {
-        console.log(fullSchedule);
-    })
+    let { earliestHour, latestHour, divRows } = $derived(ScheduleTime(fullSchedule));
 
 </script>
 
 <div class="flex min-h-full p-2">
-    <div class="flex flex-col items-center justify-center card preset-outlined-secondary-500 bg-secondary-950/20 min-w-full p-2 gap-2">
-        <div class="flex flex-1 card preset-outlined-secondary-500 bg-secondary-950/20 p-2 items-center justify-center min-w-full">
-            <h1>SCHEDULE</h1>
+    <div class="flex flex-col items-center justify-center card preset-outlined-primary-500 bg-primary-950/20 min-w-full p-4 gap-2">
+        <div class="flex card preset-outlined-primary-500 bg-primary-950/20 p-4 items-center justify-center min-w-full min-h-fit">
+            <h1 class="font-black">SCHEDULE</h1>
         </div>
-        <div class="flex-15 min-w-full">
-            <div class="card preset-outlined-secondary-500 bg-secondary-950/20 flex flex-col min-h-full text-center p-4 gap-1">
-                <div class="flex min-w-full card bg-secondary-950/20 rounded-xl">
-                    <div class="preset-outlined-secondary-500 rounded-tl-xl flex-1">Time</div>
+        <div class="flex-auto min-w-full card preset-outlined-primary-500 bg-primary-950/20 items-center justify-center">
+            <div class="flex flex-col min-h-full text-center p-4 gap-1">
+                <div class="flex min-w-full card bg-primary-950/20 rounded-xl">
+                    <div class="preset-outlined-primary-500 rounded-tl-xl flex-1">Time</div>
                     <div class="flex-5 flex flex-row items-center justify-center">
-                        <div class="preset-outlined-secondary-500 flex-1">Monday</div>
-                        <div class="preset-outlined-secondary-500 flex-1">Tuesday</div>
-                        <div class="preset-outlined-secondary-500 flex-1">Wednesday</div>
-                        <div class="preset-outlined-secondary-500 flex-1">Thursday</div>
-                        <div class="preset-outlined-secondary-500 flex-1 {fullSchedule.has(Day.Saturday) ? "" : "rounded-tr-xl"}">Friday</div>
+                        <div class="preset-outlined-primary-500 flex-1">Monday</div>
+                        <div class="preset-outlined-primary-500 flex-1">Tuesday</div>
+                        <div class="preset-outlined-primary-500 flex-1">Wednesday</div>
+                        <div class="preset-outlined-primary-500 flex-1">Thursday</div>
+                        <div class="preset-outlined-primary-500 flex-1 {fullSchedule.has(Day.Saturday) ? "" : "rounded-tr-xl"}">Friday</div>
                         {#if fullSchedule.has(Day.Saturday)}
-                            <div class="preset-outlined-secondary-500 rounded-tr-xl  flex-1">Saturday</div>
+                            <div class="preset-outlined-primary-500 rounded-tr-xl  flex-1">Saturday</div>
                         {/if}
                     </div>
-                </div>  
+                </div>
 
-                <div class="flex flex-1 min-w-full min-h-full card bg-secondary-950/20 rounded-xl">
+                <div class="flex flex-1 min-w-full card bg-primary-950/20 rounded-xl">
                     <!-- Time -->
-                    <div class="preset-outlined-secondary-500 rounded-bl-xl flex-1">
-                        
+                    <div class="flex flex-1 flex-row items-center justify-center preset-outlined-primary-500 rounded-bl-xl">
+                        <div class="h-full w-full">
+                            <TimeColumn divRows={divRows} hourData={{ earliestHour, latestHour }}></TimeColumn>
+                        </div>
                     </div>
                     
                     <div class="flex-5 flex flex-row items-center justify-center">
                         <!-- Monday -->
-                        <div class="preset-outlined-secondary-500 flex-1 min-h-full"></div>
+                        <div class="preset-outlined-primary-500 flex-1 h-full">
+                            <ScheduleColumn daySchedule={fullSchedule.get(Day.Monday)} divRows={divRows} hourData={{earliestHour, latestHour}}></ScheduleColumn>
+                        </div>
                         
                         <!-- Tuesday -->
-                        <div class="preset-outlined-secondary-500 flex-1 min-h-full"></div>
+                        <div class="preset-outlined-primary-500 flex-1 h-full">
+                            <ScheduleColumn daySchedule={fullSchedule.get(Day.Tuesday)} divRows={divRows} hourData={{earliestHour, latestHour}}></ScheduleColumn>
+                        </div>
                         
                         <!-- Wednesday -->
-                        <div class="preset-outlined-secondary-500 flex-1 min-h-full"></div>
+                        <div class="preset-outlined-primary-500 flex-1 h-full">
+                            <ScheduleColumn daySchedule={fullSchedule.get(Day.Wednesday)} divRows={divRows} hourData={{earliestHour, latestHour}}></ScheduleColumn>
+                        </div>
                         
                         <!-- Thursday -->
-                        <div class="preset-outlined-secondary-500 flex-1 min-h-full"></div>
+                        <div class="preset-outlined-primary-500 flex-1 h-full">
+                            <ScheduleColumn daySchedule={fullSchedule.get(Day.Thursday)} divRows={divRows} hourData={{earliestHour, latestHour}}></ScheduleColumn>
+                        </div>
                         
                         <!-- Friday -->
-                        <div class="preset-outlined-secondary-500 flex-1 min-h-full {fullSchedule.has(Day.Saturday) ? "" : "rounded-br-xl"}"></div>
+                        <div class="preset-outlined-primary-500 flex-1 h-full {fullSchedule.has(Day.Saturday) ? "" : "rounded-br-xl"}">
+                            <ScheduleColumn daySchedule={fullSchedule.get(Day.Friday)} divRows={divRows} hourData={{earliestHour, latestHour}}></ScheduleColumn>
+                        </div>
                         
                         <!-- Saturday -->
                         {#if fullSchedule.has(Day.Saturday)}
-                            <div class="preset-outlined-secondary-500 rounded-br-xl  flex-1 min-h-full"></div>
+                            <div class="preset-outlined-primary-500 rounded-br-xl  flex-1 h-full">
+                                <ScheduleColumn daySchedule={fullSchedule.get(Day.Saturday)} divRows={divRows} hourData={{earliestHour, latestHour}}></ScheduleColumn>
+                            </div>
                         {/if}
                     </div>
                 </div>
