@@ -24,14 +24,14 @@ Visual Studio Code's layout and design for search is simple, concise, and self d
 
 For this site, I used Svelte / SvelteKit (web framework), TailwindCSS (CSS framework), and SkeletonUI (component library), as I am most familiar with the usage of all of these technologies.
 
-# Course Data
+## Course Data
 
 The first feature I worked on is retrieval of the course data. I decided, for the sake of future development should this turn into a real application, to create an GET API endpoint to retrieve courses (`api/get-courses`). Following the simple setup, I decided on the structure/data types of the course data (`course-interfaces.ts`). I opted to mirror the example data set provided in the instructions. Following which, I created `mock-data.ts`, where I added courses that tests each feature I wanted to test, modelled using mostly real course information, taken from Archershub and my own past course enrollments. For this, I wanted to make the mock data in a Typescript file to ensure complete type safety during its creation. However, it should be possible to replace `mock-data.ts` with a real CRUD database, whether it would be a `.json` uploaded to an admin site with Ajv to check types, or a completely separate panel for modifying a real database.
 
-# Section Selection
+## Section Selection
 
 I opted to do the selected section operations (addition, removal, checking of sections) to the individual section component itself, while passing the final list of sections selected back to the main `+page.svelte`. For both decisions, I believe it to be the simpler way in terms of programming. While there may be a way of optimizing this system, my focus and programming style is to keep it simple in logic.
 
-# Schedule Building
+## Schedule Building
 
 On original read of the instructions, I went with using flexboxes to create the schedule, and aligning it to 15-minute intervals (effectively rows) with `flex-basis`. Flex is more familiar to me than using grids or tables, and allows simpler control for me to know the flow of each element. I also padded the start and end schedule to the next/nearest hour so that schedules are consistent in layout.
