@@ -6,6 +6,10 @@ This file is to document the rationale between design and architectural decision
 
 ### Slottle
 
+<p align="center">
+    <img width="600px" src="./gh-assets/rationale/slottle-1.png">
+</p>
+
 [Slottle](https://pana.tools/slottle-chrome)'s overall layout is clean, effective, and makes sense to a normal user. As such, the layout and design of Slottle shall become the base (or the fork in version control terms) of the layout and design of Schedkip. However, information and individual components (specifically the course list) could be more condensed or tighter.
 
 ### Visual Studio Code
@@ -24,9 +28,13 @@ For this site, I used Svelte / SvelteKit (web framework), TailwindCSS (CSS frame
 
 I explicitly defined the entire structure of the course data in `course-interfaces.ts`, with interface definitions. Instead of a JSON file piped into the TypeScript code, I opted to make the mock data inside TypeScript file `mock-data.ts`, to explicitly ensure type safety during the creation of the mock data (and further input from an admin webpage should this be developed into an actual website).
 
+# Course Data
+
+Using 
+
 # Section Selection
 
-I opted to do the main schedule operations (addition, removal, checking of sections) to the individual section itself.
+I opted to do the selected section operations (addition, removal, checking of sections) to the individual section component itself, while passing the final list of sections selected back to the main `+page.svelte`. For both decisions, I believe it to be the simpler way in terms of programming. While there may be a way of optimizing this system, my focus and programming style is to keep it simple in logic.
 
 # Schedule Building
 

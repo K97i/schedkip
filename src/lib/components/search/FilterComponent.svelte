@@ -6,11 +6,15 @@
 
 	let { courses, courseCode = $bindable(), filteredSections = $bindable() }: { courses: Array<Course>, courseCode: string, filteredSections: Array<Section> } = $props();
 
-    let searchInstructor: string = $state(""),
-        selectedDate: Day = $state(Day.DEFAULT),
-        comboboxItems: Array<Course> = $derived(courses);
+    let searchInstructor: string = $state("");
+    let selectedDate: Day = $state(Day.DEFAULT);
+    let comboboxItems: Array<Course> = $derived(courses);
 
+    /**
+     * Filter function
+     */
     function filter() {
+        // Update filteredSections
         filteredSections = courses.filter((course: Course) => course.code === courseCode)
                     .flatMap((course: Course) => course.sections)
                     .filter((section: Section) => {
@@ -25,7 +29,7 @@
                                     schedule.day === selectedDate;
                             }))
                         )
-                    })
+                    });
     };
 
     // The following code is derived from Skeleton UI's combobox documentation
