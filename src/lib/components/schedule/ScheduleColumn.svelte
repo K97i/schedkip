@@ -59,7 +59,7 @@
     });
 </script>
 
-<div class="grid grid-cols-1 grid-rows-1 h-full">
+<div class="grid grid-cols-1 grid-rows-1 min-w-8 md:min-w-32 max-w-full h-full">
     <div class="col-start-1 row-start-1 h-full">
         <ScheduleHourDivider divRows={divRows} />
     </div>
@@ -72,23 +72,26 @@
                         <div class="card preset-outlined-primary-500 bg-primary-950/20 backdrop-blur-[2px] flex flex-col min-w-full justify-between">
                             <!-- Start Time -->
                             <div class="flex flex-row justify-center text-surface-300">
-                                <div class="text-[0.70rem]">
+                                <div class="text-xs md:text-[0.70rem]">
                                     {item.data.scheduleData.timeStart.hour}:{item.data.scheduleData.timeStart.minute < 10 ? '0' + item.data.scheduleData.timeStart.minute : item.data.scheduleData.timeStart.minute} 
                                 </div>
                             </div>
 
                             <!-- Section Data -->
-                            <div class="flex flex-col text-md leading-none">
+                            <div class="flex flex-col text-[0.60rem] md:text-[0.70rem] leading-none">
                                 <div>
-                                    {item.data.section.course} ({item.data.section.section.section})
+                                    {item.data.section.course}
                                 </div>
                                 <div>
                                     {item.data.scheduleData.room}
                                 </div>
+                                <div>
+                                    ({item.data.section.section.section})
+                                </div>
                             </div>
                             <!-- End Time -->
                             <div class="flex flex-row justify-center text-surface-300">
-                                <div class="text-[0.70rem]">
+                                <div class="text-xs md:text-[0.70rem]">
                                     {item.data.scheduleData.timeEnd.hour}:{item.data.scheduleData.timeEnd.minute < 10 ? '0' + item.data.scheduleData.timeEnd.minute : item.data.scheduleData.timeEnd.minute}
                                 </div>
                             </div>

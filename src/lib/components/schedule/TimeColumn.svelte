@@ -7,7 +7,7 @@
 </script>
 
 
-<div class="grid grid-cols-1 grid-rows-1 h-full">
+<div class="grid grid-cols-1 grid-rows-1 min-w-8 md:min-w-32 h-full">
   
     <div class="col-start-1 row-start-1 h-full">
         <div class="flex flex-col p-1 h-full">

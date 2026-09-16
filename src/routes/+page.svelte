@@ -20,11 +20,11 @@
 
 <div class="bg-primary-900/5">
     <div class="flex flex-col md:flex-row h-svh overflow-y-scroll snap-y snap-mandatory">
-        <div class="md:flex-1 min-h-svh snap-start">
+        <div class="md:flex-1 min-w-4xs min-h-svh snap-start">
             <SearchComponent courses={courses} bind:selectedList={selectedList} />
         </div>
 
-        <div class="md:flex-3 min-h-svh snap-start">
+        <div class="flex-3 max-w-full md:max-w-3/4 min-h-svh snap-start">
             <Schedule selectedList={selectedList} />
         </div>
 

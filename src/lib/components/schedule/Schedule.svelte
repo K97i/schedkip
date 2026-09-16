@@ -4,6 +4,7 @@
     import { ScheduleTime, type ScheduleItem } from "./ScheduleItem";
     import ScheduleColumn from "./ScheduleColumn.svelte";
     import TimeColumn from "./TimeColumn.svelte";
+    import { onMount } from "svelte";
 
 	let { selectedList }: { selectedList: SvelteMap<string, SelectedSection> } = $props();
 
@@ -39,31 +40,38 @@
     });
 
     let { earliestHour, latestHour, divRows } = $derived(ScheduleTime(fullSchedule));
+    let screenWidth: number = $state(0);
+    let remSize: number = $state(0);
 
+    onMount(() => {
+		remSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+	});
 </script>
 
+<svelte:window bind:innerWidth={screenWidth} />
+
 <div class="flex min-h-full p-2">
-    <div class="flex flex-col items-center justify-center card preset-outlined-primary-500 bg-primary-950/20 min-w-full p-4 gap-2">
-        <div class="flex card preset-outlined-primary-500 bg-primary-950/20 p-4 items-center justify-center min-w-full min-h-fit">
+    <div class="flex flex-col items-center justify-center card preset-outlined-primary-500 bg-primary-950/20 min-w-full p-2 md:p-4 gap-2">
+        <div class="flex card preset-outlined-primary-500 bg-primary-950/20 p-4 items-center justify-center min-w-full max-w-full min-h-fit">
             <h1 class="font-black">SCHEDULE</h1>
         </div>
-        <div class="flex-auto min-w-full card preset-outlined-primary-500 bg-primary-950/20 items-center justify-center">
-            <div class="flex flex-col min-h-full text-center p-4 gap-1">
-                <div class="flex min-w-full card bg-primary-950/20 rounded-xl">
-                    <div class="preset-outlined-primary-500 rounded-tl-xl flex-1">Time</div>
+        <div class="flex-auto min-w-full max-w-full card preset-outlined-primary-500 bg-primary-950/20 items-center justify-center overflow-auto scrollbar-thin scrollbar-thumb-primary-contrast-950-50/50">
+            <div class="flex flex-col min-h-full min-w-fit text-sm text-center md:p-4 gap-1">
+                <div class="flex min-w-full card bg-primary-950/20 rounded-tl-xl">
+                    <div class="preset-outlined-primary-500 rounded-tl-xl flex-1">{screenWidth >= 48 * remSize ? "Time" : "Time"}</div>
                     <div class="flex-5 flex flex-row items-center justify-center">
-                        <div class="preset-outlined-primary-500 flex-1">Monday</div>
-                        <div class="preset-outlined-primary-500 flex-1">Tuesday</div>
-                        <div class="preset-outlined-primary-500 flex-1">Wednesday</div>
-                        <div class="preset-outlined-primary-500 flex-1">Thursday</div>
-                        <div class="preset-outlined-primary-500 flex-1 {fullSchedule.has(Day.Saturday) ? "" : "rounded-tr-xl"}">Friday</div>
+                        <div class="preset-outlined-primary-500 flex-1">{screenWidth >= 48 * remSize ? "Monday" : "M"}</div>
+                        <div class="preset-outlined-primary-500 flex-1">{screenWidth >= 48 * remSize ? "Tuesday" : "T"}</div>
+                        <div class="preset-outlined-primary-500 flex-1">{screenWidth >= 48 * remSize ? "Wednesday" : "W"}</div>
+                        <div class="preset-outlined-primary-500 flex-1">{screenWidth >= 48 * remSize ? "Thursday" : "T"}</div>
+                        <div class="preset-outlined-primary-500 flex-1 {fullSchedule.has(Day.Saturday) ? "" : "rounded-tr-xl"}">{screenWidth >= 48 * remSize ? "Friday" : "F"}</div>
                         {#if fullSchedule.has(Day.Saturday)}
-                            <div class="preset-outlined-primary-500 rounded-tr-xl  flex-1">Saturday</div>
+                            <div class="preset-outlined-primary-500 rounded-tr-xl  flex-1">{screenWidth >= 48 * remSize ? "Saturday" : "S"}</div>
                         {/if}
                     </div>
                 </div>
 
-                <div class="flex flex-1 min-w-full card bg-primary-950/20 rounded-xl">
+                <div class="flex flex-1 min-w-full card bg-primary-950/20 rounded-bl-xl">
                     <!-- Time -->
                     <div class="flex flex-1 flex-row items-center justify-center preset-outlined-primary-500 rounded-bl-xl">
                         <div class="h-full w-full">
