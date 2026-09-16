@@ -18,6 +18,10 @@
     onMount(async () => await grabCourses());
 </script>
 
+<svelte:head>
+    <title>Schedkip</title>
+</svelte:head>
+
 <div class="bg-primary-900/5">
     <div class="flex flex-col md:flex-row h-svh overflow-y-scroll snap-y snap-mandatory">
         <div class="md:flex-1 min-w-4xs min-h-svh snap-start">
