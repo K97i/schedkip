@@ -3,7 +3,7 @@
     import { SvelteMap } from "svelte/reactivity";
     import { fade, fly } from "svelte/transition";
 
-    // Only keys that will select the sections when using keyboard
+    // Only keys that will select the sections when using keyboard / onKeyUp
     const TOGGLE_KEYS: Array<string> = [
         "Enter",
         "Space",

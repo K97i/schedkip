@@ -30,7 +30,7 @@ I explicitly defined the entire structure of the course data in `course-interfac
 
 # Course Data
 
-The first feature I worked on is retrieval of the course data. I decided, for the sake of future development should this turn into a real application, to create an GET API endpoint to retrieve courses (`api/get-courses`). Following the simple setup, I decided on the structure/data types of the course data (`course-interfaces.ts`). I opted to mirror the example data set provided in the instructions. Following which, I created `mock-data.ts`, where I added courses that tests each feature I wanted to test, modelled using mostly real course information, taken from Archershub and my own past course enrollments.
+The first feature I worked on is retrieval of the course data. I decided, for the sake of future development should this turn into a real application, to create an GET API endpoint to retrieve courses (`api/get-courses`). Following the simple setup, I decided on the structure/data types of the course data (`course-interfaces.ts`). I opted to mirror the example data set provided in the instructions. Following which, I created `mock-data.ts`, where I added courses that tests each feature I wanted to test, modelled using mostly real course information, taken from Archershub and my own past course enrollments. For this, I wanted to make the mock data in a Typescript file to ensure complete type safety during its creation. However, it should be possible to replace `mock-data.ts` with a real CRUD database, whether it would be a `.json` uploaded to an admin site with Ajv to check types, or a completely separate panel for modifying a real database.
 
 # Section Selection
 
